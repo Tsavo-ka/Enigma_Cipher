@@ -184,13 +184,13 @@ def setup_enigma():
     reflector_pick = int(get_user_input(f"Choose reflector - ({', '.join(reflectors)}): ", [str(x+1) for x in range(len(reflectors))]))
     
     def offset_rotor(rotor_number):
-        offset = get_user_input(f' Choose a ring setting for rotor {rotor_number} (A-Z): ', LETTERS+LETTERS.lower())
+        offset = get_user_input(f'Choose a ring setting for rotor {rotor_number} (A-Z): ', LETTERS+LETTERS.lower())
         offset = LETTERS.index(offset[0].upper())
         print(f"Offset: {offset}")
         return offset
     
     def rotor_start_position(rotor_number):
-        start_position = get_user_input(f' Choose a start position for rotor {rotor_number} (A-Z): ', LETTERS+LETTERS.lower())
+        start_position = get_user_input(f'Choose a start position for rotor {rotor_number} (A-Z): ', LETTERS+LETTERS.lower())
         start_position = LETTERS.index(start_position[0].upper())
         print(f"Start position: {start_position}")
         return start_position
