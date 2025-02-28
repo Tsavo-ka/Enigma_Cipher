@@ -50,7 +50,7 @@ REFLECTORS_DICT = {
 }
 
 
-# Names, number of rotors, number of reflectors, and reflector names for various enigma types
+#Names, number of rotors, number of reflectors, and reflector names for various enigma types
 MACHINE_TYPES = {
     1:("Service Enigma (Enigma I)", 5, 3, 
        {
@@ -73,7 +73,6 @@ MACHINE_TYPES = {
       )
 }
 
-# A class object that emulates the functionality of an enigma rotor
 class Rotor:
 
     def __init__(self, name, setting, notch, offset, position):
@@ -101,7 +100,6 @@ class Rotor:
     def rotate(self):
         self.position = (self.position + 1) % 26
 
-# A class object that emulates the functionality of an enigma reflector
 class Reflector:
 
     def __init__(self, name, setting):
@@ -113,8 +111,7 @@ class Reflector:
 
     def encrypt(self, letter):
         return self.setting[LETTERS.index(letter)]
-      
-# A class object that emulates the functionality and components of an enigma machine
+
 class Enigma:
 
     def __init__(self, name, rotor_1, rotor_2, rotor_3, reflector, plugboard=None):
@@ -158,7 +155,6 @@ class Enigma:
 
         return change_7
 
-# A function to take and sanitize inputs from the user
 def get_user_input(prompt, valid_values):
     while True:
         answer = input(prompt)
@@ -167,7 +163,6 @@ def get_user_input(prompt, valid_values):
         else:
             print("Invalid input. Please try again.")
 
-# A function to setup the enigma machine with the user's parameters
 def setup_enigma():
     
     enigma_type = int(get_user_input("Choose your enigma type (1: Service Enigma, 2: Enigma K, 3: Railway Enigma): ", ['1','2','3']))
@@ -214,6 +209,10 @@ def setup_enigma():
     plugboard = setup_plugboard()
     offset_1, offset_2, offset_3 = offset_rotor(1), offset_rotor(2), offset_rotor(3)
     position_1, position_2, position_3 = rotor_start_position(1), rotor_start_position(2), rotor_start_position(3)
+
+    return enigma_type, used_rotors, reflector_pick, offset_1, offset_2, offset_3, position_1, position_2, position_3, plugboard
+
+def build(enigma_type, used_rotors, reflector_pick, offset_1, offset_2, offset_3, position_1, position_2, position_3, plugboard):
         
     rotor_1 = Rotor("Rotor 1", ROTORS_DICT[enigma_type][used_rotors[0]][0], ROTORS_DICT[enigma_type][used_rotors[0]][1], offset_1, position_1)
     rotor_2 = Rotor("Rotor 2", ROTORS_DICT[enigma_type][used_rotors[1]][0], ROTORS_DICT[enigma_type][used_rotors[1]][1], offset_2, position_2)
@@ -221,13 +220,19 @@ def setup_enigma():
     
     reflector = Reflector(REFLECTORS_DICT[enigma_type][reflector_pick][1], REFLECTORS_DICT[enigma_type][reflector_pick][0])
     
-    return Enigma(MACHINE_TYPES[enigma_type], rotor_1, rotor_2, rotor_3, reflector, plugboard)
+    return MACHINE_TYPES[enigma_type], rotor_1, rotor_2, rotor_3, reflector, plugboard
 
 def main():
 
+    reuse = False
+
     while True:
 
-        enigma = setup_enigma()
+        if not reuse:
+            enigma_type, used_rotors, reflector_pick, offset_1, offset_2, offset_3, position_1, position_2, position_3, plugboard = setup_enigma()
+
+        enigma, rotor_1, rotor_2, rotor_3, reflector, plugboard = build(enigma_type, used_rotors, reflector_pick, offset_1, offset_2, offset_3, position_1, position_2, position_3, plugboard)
+        enigma = Enigma(enigma, rotor_1, rotor_2, rotor_3, reflector, plugboard)
 
         text = input("Enter your message: ").upper().replace(" ","")
     
@@ -238,6 +243,13 @@ def main():
 
         if go_again == 'n':
             break
+
+        save_setting = get_user_input("Do you want to reuse the previous configuration? (y/n): ", ('y','n','Y','N'))
+
+        if save_setting in ('Y','y'):
+            reuse = True
+        else:
+            reuse = False
 
 if __name__ == "__main__":
     main()
