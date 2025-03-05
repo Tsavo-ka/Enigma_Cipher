@@ -4,8 +4,8 @@ An Enigma Machine Emulator engine, mimicking the exact functionality of three WW
 This app was made as a fun learning project to teach encryption concepts, code analysis, logic, Python OOP, and the functionality of a WW2 enigma machine
 
 This app guides the user through the configuration, setup, and the encryption process of the enigma machine.
-The app 
 
+User guide:
 Step 1: Choose between 3 different enigma machines (1: Service Enigma, 2: Enigma K, 3: Railway Enigma)
 Step 2: Choose between 3-5 rotors, each with different lettering configurations
 Step 3: Choose reflector type
