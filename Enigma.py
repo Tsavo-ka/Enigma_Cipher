@@ -80,7 +80,7 @@ class Rotor:
         self.setting = setting
         self.notch = notch
         self.offset = offset
-        self.position= position
+        self.position = position
 
     def __str__(self):
         return f'\nRotor name {self.name}\nSetting {self.setting}\nNotch'
