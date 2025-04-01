@@ -1,4 +1,4 @@
-# Enigma_Cipher\
+# Enigma_Cipher
 An Enigma Machine Emulator engine, mimicking the exact functionality of three WW2-era enigma machines\
 \
 This app was made as a fun learning project to teach encryption concepts, code analysis, logic, Python OOP, and the functionality of a WW2 enigma machine\
